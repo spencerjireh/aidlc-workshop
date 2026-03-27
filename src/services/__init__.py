@@ -5,6 +5,7 @@ from .segmentation_service import SegmentationService
 from .ad_generator_service import AdGeneratorService
 from .targeting_engine import TargetingEngine
 from .query_chatbot_service import QueryChatbotService
+from .analytics_service import AnalyticsService
 
 __all__ = [
     'SyntheticDataGenerator',
@@ -12,4 +13,5 @@ __all__ = [
     'AdGeneratorService',
     'TargetingEngine',
     'QueryChatbotService',
+    'AnalyticsService',
 ]

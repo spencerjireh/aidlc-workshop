@@ -74,25 +74,19 @@ def test_pii_anonymization(customer):
     assert retrieved.customer_id == anonymized_id
 
 
-# Feature: llm-customer-segmentation-ads, Property 23: Encryption Round-Trip
+# Property: Data storage round-trip
 @given(customer=customer_profile_strategy())
 @settings(max_examples=100)
-def test_encryption_round_trip(customer):
+def test_data_storage_round_trip(customer):
     """
-    **Validates: Requirements 8.2**
-    
-    Property: For any customer data, encrypting and then decrypting the data
+    Property: For any customer data, storing and then retrieving the data
     should produce data equivalent to the original.
     """
     repo = CustomerDataRepository()
-    
-    # Store customer (encrypts data)
+
     anonymized_id = repo.create_customer(customer)
-    
-    # Retrieve customer (decrypts data)
     retrieved = repo.get_customer(anonymized_id)
-    
-    # Verify all fields match (except customer_id which is anonymized)
+
     assert retrieved is not None
     assert retrieved.age == customer.age
     assert retrieved.location == customer.location
@@ -102,27 +96,24 @@ def test_encryption_round_trip(customer):
     assert abs(retrieved.total_spend - customer.total_spend) < 0.01
     assert retrieved.account_age_days == customer.account_age_days
     assert retrieved.preferred_payment_methods == customer.preferred_payment_methods
-    # Note: datetime comparison may have microsecond differences due to serialization
     assert abs((retrieved.last_transaction_date - customer.last_transaction_date).total_seconds()) < 1
 
 
-# Additional property test: Multiple customers encryption independence
+# Property: Multiple customers storage independence
 @given(customers=st.lists(customer_profile_strategy(), min_size=2, max_size=10, unique_by=lambda c: c.customer_id))
 @settings(max_examples=50)
-def test_multiple_customers_encryption_independence(customers):
+def test_multiple_customers_storage_independence(customers):
     """
-    Property: Encrypting multiple customers should produce independent encrypted data.
+    Property: Storing multiple customers should produce independent data.
     Each customer should be retrievable with correct data.
     """
     repo = CustomerDataRepository()
-    
-    # Store all customers
+
     anonymized_ids = []
     for customer in customers:
         anonymized_id = repo.create_customer(customer)
         anonymized_ids.append(anonymized_id)
-    
-    # Verify all customers are retrievable with correct data
+
     for i, customer in enumerate(customers):
         retrieved = repo.get_customer(anonymized_ids[i])
         assert retrieved is not None

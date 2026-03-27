@@ -1,0 +1,100 @@
+
+=== Synthetic Data Generation Report ===
+
+Total Customers: 10500
+
+Archetype Distribution:
+archetype
+budget_conscious       2500
+young_digital          2000
+high_value_frequent    1500
+bill_payment           1500
+occasional             1000
+business_merchant       800
+remittance              700
+outlier                 500
+Name: count, dtype: int64
+
+=== Feature Statistics ===
+
+Age Distribution:
+count    10500.000000
+mean        34.437810
+std         10.097243
+min         18.000000
+25%         26.000000
+50%         33.000000
+75%         42.000000
+max         59.000000
+Name: age, dtype: float64
+
+Transaction Frequency Distribution:
+count    10500.000000
+mean        46.810381
+std         33.364607
+min          1.000000
+25%         18.000000
+50%         42.000000
+75%         62.000000
+max        315.000000
+Name: transaction_frequency, dtype: float64
+
+Average Transaction Value Distribution:
+count    10500.000000
+mean      2540.255250
+std       3344.006678
+min         83.805249
+25%        507.785000
+50%       1116.304355
+75%       3140.230000
+max      44331.440977
+Name: average_transaction_value, dtype: float64
+
+Location Distribution (Top 10):
+location
+Quezon City    2711
+Manila         1312
+Pasig          1226
+Makati         1083
+BGC             869
+Mandaluyong     508
+Cebu City       433
+Paranaque       406
+Las Pinas       356
+Muntinlupa      325
+Name: count, dtype: int64
+
+=== Clustering Suitability Check ===
+Feature variance:
+  age: 101.94
+  transaction_frequency: 1113.09
+  average_transaction_value: 11181315.68
+  total_spend: 113513593713.52
+  account_age_days: 94315.15
+
+Feature correlations:
+  age <-> transaction_frequency: -0.227
+  age <-> average_transaction_value: 0.273
+  age <-> total_spend: 0.168
+  age <-> account_age_days: -0.003
+  transaction_frequency <-> average_transaction_value: 0.510
+  transaction_frequency <-> total_spend: 0.721
+  transaction_frequency <-> account_age_days: 0.010
+  average_transaction_value <-> total_spend: 0.838
+  average_transaction_value <-> account_age_days: 0.008
+  total_spend <-> account_age_days: 0.011
+
+✓ PCA: 3 components explain 80% variance
+  Explained variance by component: [0.48050746 0.2361007  0.19993883 0.06193187 0.02152114]
+
+✓ K-Means silhouette scores:
+  k=3: 0.326
+  k=4: 0.318
+  k=5: 0.333
+  k=6: 0.335
+  k=7: 0.343
+  k=8: 0.340
+  k=9: 0.355
+  k=10: 0.313
+
+✓ Optimal k: 9 (silhouette score: 0.355)

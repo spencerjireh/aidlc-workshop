@@ -18,3 +18,13 @@ venv/
 
 # Temporary folders
 tmp/
+
+# Editor config
+.vscode/
+
+# Test caches
+.hypothesis/
+
+# Environment
+.env
+.env.local
